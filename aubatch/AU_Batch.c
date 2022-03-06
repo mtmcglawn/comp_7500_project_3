@@ -1,5 +1,5 @@
-#define _PWORD_COUNT_C
-#include "PWordCount.h"
+#define _AU_BATCH_C
+#include "AU_Batch.h"
 
 
 /*
@@ -38,33 +38,19 @@
  */
 
 
-int pWordCount(int argc, char *argv[])
+int aubatch()
 {
-  int ret_val = 0;
-  if (argc == 2)
+  char welcome_string[54] = "Welcome to Tyler's batch job scheduler Version 1.0\n";
+  char second_line[56] = "Type 'help' to find out more about AUbatch commands.\n";
+  strcat( welcome_string, second_line);
+  fprintf(stdout, "%s", welcome_string);
+  pthread_t user_interface_thread, execution_thread;
+  int interface_err = pthread_create(&user_interface_thread, NULL, launch_user_interface, NULL);
+  int execution_err = pthread_create(&execution_thread, NULL, launch_execution, NULL);
+  if (interface_err != 0 || execution_err != 0)
   {
-    FILE *input_file = fopen(argv[1], "r");
-    if (!input_file)
-    {
-      fprintf(stderr, "Can not open file %s\n", argv[1]);
-      ret_val = 1;
-    }
-    else
-    {
-      ret_val = pipelining(argv[1]);
-    }
-  }
-  else
-  {
-    ret_val = printBadInputs();
-  }
-  return ret_val;
-}
-
-
-int printBadInputs()
-{
-    fprintf(stderr, "Please enter a file name.\n");
-    fprintf(stderr, "Usage: ./pwordcount <file_name>\n");
+    fprintf(stdout, "Error creating threads");
     return 1;
+  }
+  return 0;
 }

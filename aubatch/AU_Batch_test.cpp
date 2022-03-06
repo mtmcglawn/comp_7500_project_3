@@ -1,7 +1,7 @@
 #include <iostream>
 #include "gtest/gtest.h"
 extern "C" {
-#include "PWordCount.h"
+#include "AU_Batch.h"
 }
 
 using namespace std;
@@ -11,26 +11,23 @@ TEST(PWordCount, DoesAssertWork){
   ASSERT_TRUE(1 == 1);
 }
 
-
-struct PWordCountEmptyInputTest : public testing::Test {
-  int inputCount;
-  char* input[MAX_BUFFER_SIZE];
-  void SetUp() {
-    inputCount = 0;
-  }
+struct AUBatchTest : public testing::Test {
+  string expected_output = "Welcome to Tyler's batch job scheduler Version 1.0\nType 'help' to find out more about AUbatch commands.\n";
+  void SetUp() {}
   void TearDown() {}
 };
 
-TEST_F(PWordCountEmptyInputTest, PWordCountReturnsInt){
+TEST_F(AUBatchTest, AUBatchReturnsInt){
   testing::internal::CaptureStdout();
-  ASSERT_EQ(typeid(pWordCount(inputCount, input)), typeid(int));
+  ASSERT_EQ(typeid(aubatch()), typeid(int));
   std::string output = testing::internal::GetCapturedStdout();
 }
 
-TEST_F(PWordCountEmptyInputTest, PWordCountEmptyInputReturnsZero){
+TEST_F(AUBatchTest, AUBatchOutputCorrect){
   testing::internal::CaptureStdout();
-  ASSERT_EQ(pWordCount(inputCount, input), 1);
+  aubatch();
   std::string output = testing::internal::GetCapturedStdout();
+  ASSERT_EQ(output, expected_output);
 }
 
 

@@ -1,4 +1,4 @@
-#include "PWordCount.h"
+#include "AU_Batch.h"
 
 
 /*
@@ -38,5 +38,5 @@
 
 
 int main(int argc, char *argv[]) {
-  return pWordCount(argc, argv);
+  return aubatch();
 }

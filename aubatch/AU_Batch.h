@@ -1,7 +1,15 @@
-#ifndef _PWORD_COUNT_H
-#define _PWORD_COUNT_H
+#ifndef _AU_BATCH_H
+#define _AU_BATCH_H
 
-#include "Pipelining.h"
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+#include "Config.h"
+#include "Execution.h"
+#include "UserInterface.h"
 
 
 /*
@@ -40,10 +48,7 @@
  */
 
 
-int pWordCount(int  argc,
-               char *argv[]);
-
-int printBadInputs();
+int aubatch();
 
 
 #endif
