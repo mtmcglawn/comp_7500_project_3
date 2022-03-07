@@ -38,6 +38,7 @@
  */
 
 
-void *launch_user_interface()
+void *launch_user_interface(void *arg)
 {
+  pthread_exit(CLEAN_THREAD_EXIT);
 }

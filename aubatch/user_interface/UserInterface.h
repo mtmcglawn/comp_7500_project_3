@@ -2,6 +2,12 @@
 #define _USER_INTERFACE_H
 
 
+#include <pthread.h>
+
+
+#include "Config.h"
+
+
 /*
  * COMP 7500/001
  * Matthew Tyler McGlawn
@@ -38,7 +44,13 @@
  */
 
 
-void *launch_user_interface();
+typedef struct user_interface_inputs_struct
+{
+  pthread_mutex_t *ui_queue_lock;
+} user_interface_inputs;
+
+
+void *launch_user_interface(void *arg);
 
 
 #endif

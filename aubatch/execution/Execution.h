@@ -2,6 +2,12 @@
 #define _EXECUTION_H
 
 
+#include <pthread.h>
+
+
+#include "Config.h"
+
+
 /*
  * COMP 7500/001
  * Matthew Tyler McGlawn
@@ -38,7 +44,13 @@
  */
 
 
-void *launch_execution();
+typedef struct execution_inputs_struct
+{
+  pthread_mutex_t *ui_queue_lock;
+} execution_inputs;
+
+
+void *launch_execution(void *arg);
 
 
 #endif
