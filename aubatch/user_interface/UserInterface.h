@@ -5,9 +5,6 @@
 #include <pthread.h>
 
 
-#include "Config.h"
-
-
 /*
  * COMP 7500/001
  * Matthew Tyler McGlawn

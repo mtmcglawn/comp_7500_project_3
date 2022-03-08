@@ -40,5 +40,5 @@
 
 void *launch_execution(void *arg)
 {
-  pthread_exit(CLEAN_THREAD_EXIT);
+  pthread_exit(0);
 }

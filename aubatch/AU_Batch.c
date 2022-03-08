@@ -60,16 +60,61 @@ int aubatch()
   pthread_t user_interface_thread, execution_thread;
   int interface_err = pthread_create(&user_interface_thread, NULL, launch_user_interface, NULL);
   int execution_err = pthread_create(&execution_thread, NULL, launch_execution, NULL);
+
   if (interface_err != 0 || execution_err != 0)
   {
-    fprintf(stdout, "Error creating threads");
+    fprintf(stderr, "Error creating threads");
+    free(user_interface_inputs);
+    free(execution_inputs);
     return 1;
   }
-  
+
   void *ui_ret_val;
   void *ex_ret_val;
-  pthread_join(user_interface_thread, &ui_ret_val);
-  pthread_join(execution_thread, &ex_ret_val);
-  //printf("%d", ui_ret_val);
+  interface_err = pthread_join(user_interface_thread, &ui_ret_val);
+  execution_err = pthread_join(execution_thread, &ex_ret_val);
+
+  if (interface_err != 0 || execution_err != 0)
+  {
+    fprintf(stderr, "Error joining threads");
+    free(user_interface_inputs);
+    free(execution_inputs);
+    free(ui_ret_val);
+    free(ex_ret_val);
+    return 1;
+  }
+
+  if (ui_ret_val != 0)
+  {
+    switch((int)(uintptr_t)ui_ret_val)
+    {
+      default:
+        fprintf(stderr, "UI return value unknown");
+      free(user_interface_inputs);
+      free(execution_inputs);
+      free(ui_ret_val);
+      free(ex_ret_val);
+      return 1;
+    }
+  }
+
+  if (ex_ret_val != 0)
+  {
+    switch((int)(uintptr_t)ex_ret_val)
+    {
+      default:
+        fprintf(stderr, "UI return value unknown");
+      free(user_interface_inputs);
+      free(execution_inputs);
+      free(ui_ret_val);
+      free(ex_ret_val);
+      return 1;
+    }
+  }
+
+  free(user_interface_inputs);
+  free(execution_inputs);
+  free(ui_ret_val);
+  free(ex_ret_val);
   return 0;
 }
