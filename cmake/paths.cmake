@@ -16,3 +16,4 @@ set(GOOGLETEST_DIR     ${EXTERNAL_DEPS_DIR}/googletest)
 
 set(EXECUTION_DIR      ${AU_BATCH_DIR}/execution)
 set(USER_INTERFACE_DIR ${AU_BATCH_DIR}/user_interface)
+set(GET_INPUT_DIR      ${AU_BATCH_DIR}/get_input)

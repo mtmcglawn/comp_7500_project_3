@@ -46,11 +46,15 @@ int aubatch()
   fprintf(stdout, "%s", welcome_string);
 
   pthread_mutex_t ui_queue_lock;
+  int process_count_in_queue = 0;
+  pthread_cond_t process_buffer_empty;
 
   struct user_interface_inputs_struct *user_interface_inputs = (
       struct user_interface_inputs_struct *)malloc(
         sizeof(struct user_interface_inputs_struct));
-  user_interface_inputs->ui_queue_lock = &ui_queue_lock;
+  user_interface_inputs->ui_queue_lock = ui_queue_lock;
+  user_interface_inputs->process_count_in_queue = &process_count_in_queue;
+  user_interface_inputs->process_buffer_empty = process_buffer_empty;
 
   struct execution_inputs_struct *execution_inputs = (
       struct execution_inputs_struct *)malloc(
@@ -68,6 +72,9 @@ int aubatch()
     free(execution_inputs);
     return 1;
   }
+
+  pthread_mutex_init(&ui_queue_lock, NULL);
+  pthread_cond_init(&process_buffer_empty, NULL);
 
   void *ui_ret_val;
   void *ex_ret_val;

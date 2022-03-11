@@ -40,5 +40,27 @@
 
 void *launch_user_interface(void *arg)
 {
-  pthread_exit(0);
+  pthread_exit((void *)(intptr_t)run_user_interface((struct user_interface_inputs_struct*)arg));
+}
+
+int run_user_interface(struct user_interface_inputs_struct *user_interface_inputs)
+{
+  pthread_mutex_t ui_queue_lock = user_interface_inputs->ui_queue_lock;
+  int *process_count_in_queue = user_interface_inputs->process_count_in_queue;
+  pthread_cond_t process_buffer_empty= user_interface_inputs->process_buffer_empty;
+  int exit_cmd = 0;
+  int err_rcvd = 0;
+  size_t input_size[INPUT_BUFFER_MAX_SIZE];
+  char *input;
+  while (exit_cmd == 0)
+  {
+    pthread_mutex_lock(&ui_queue_lock);
+    while (*process_count_in_queue == MAX_PROCESS_COUNT)
+    {
+      pthread_cond_wait(&process_buffer_empty, &ui_queue_lock);
+    }
+    pthread_mutex_unlock(&ui_queue_lock);
+    fprintf(stdout, "\n>");
+    exit_cmd = 1;
+  }
 }

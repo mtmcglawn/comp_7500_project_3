@@ -1,13 +1,5 @@
-#ifndef _USER_INTERFACE_H
-#define _USER_INTERFACE_H
-
-
-#include <pthread.h>
-#include <stdint.h>
-#include <stdio.h>
-
-
-#include "Config.h"
+#define _GET_INPUT_C
+#include "Get_Input.h"
 
 
 /*
@@ -46,17 +38,7 @@
  */
 
 
-typedef struct user_interface_inputs_struct
+void get_input(char *input, size_t *input_size)
 {
-  pthread_mutex_t ui_queue_lock;
-  int *process_count_in_queue;
-  pthread_cond_t process_buffer_empty;
-} user_interface_inputs;
-
-
-void *launch_user_interface(void *arg);
-
-int run_user_interface(struct user_interface_inputs_struct *user_interface_inputs);
-
-
-#endif
+  getline(&input, input_size, stdin);
+}

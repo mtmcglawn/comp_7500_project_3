@@ -7,17 +7,40 @@ extern "C" {
 using namespace std;
 
 
-TEST(PWordCount, DoesAssertWork){
+TEST(UserInterface, DoesAssertWork){
   ASSERT_TRUE(1 == 1);
 }
 
-/*
-struct AUBatchTest : public testing::Test {
-  string expected_output = "Welcome to Tyler's batch job scheduler Version 1.0\nType 'help' to find out more about AUbatch commands.\n";
-  void SetUp() {}
+struct UserInterfaceTest : public testing::Test {
+  pthread_mutex_t ui_queue_lock;
+  int process_count_in_queue = 0;
+  pthread_cond_t process_buffer_empty;
+
+  struct user_interface_inputs_struct *user_interface_inputs = (
+      struct user_interface_inputs_struct *)malloc(
+        sizeof(struct user_interface_inputs_struct));
+  void SetUp() {
+    user_interface_inputs->ui_queue_lock = ui_queue_lock;
+    user_interface_inputs->process_count_in_queue = &process_count_in_queue;
+    user_interface_inputs->process_buffer_empty = process_buffer_empty;
+  }
   void TearDown() {}
 };
 
+TEST_F(UserInterfaceTest, DoesNotCrash){
+  testing::internal::CaptureStdout();
+  run_user_interface(user_interface_inputs);
+  std::string output = testing::internal::GetCapturedStdout();
+  ASSERT_TRUE(1 == 1);
+}
+
+TEST_F(UserInterfaceTest, CorrectOutput){
+  testing::internal::CaptureStdout();
+  run_user_interface(user_interface_inputs);
+  std::string output = testing::internal::GetCapturedStdout();
+  ASSERT_EQ(output, "\n>");
+}
+/*
 TEST_F(AUBatchTest, AUBatchReturnsInt){
   testing::internal::CaptureStdout();
   ASSERT_EQ(typeid(aubatch()), typeid(int));
