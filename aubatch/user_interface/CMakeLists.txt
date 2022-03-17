@@ -32,7 +32,7 @@ endif()
 #######################################
 # Add Subdirectories
 #######################################
-#add_subdirectory(${})
+add_subdirectory(${DISPATCH_DIR})
 
 
 #######################################
@@ -40,6 +40,7 @@ endif()
 #######################################
 if(${CMAKE_SOURCE_DIR} STREQUAL ${${CURRENT_DIR}_INC})
     #Add Includes to directories not in subdirectories
+    add_subdirectory(${GET_INPUT_DIR} ${BUILD_DIR}/get_input)
 endif()
 
 
@@ -48,6 +49,8 @@ endif()
 #######################################
 include_directories(${COMMON_INCLUDES} ${${CURRENT_DIR}_INC}
     #Add additional required .h files here
+    ${GET_INPUT_DIR}
+    ${DISPATCH_DIR}
     )
 
 
@@ -79,6 +82,8 @@ add_library(${CLASS_NAME}_lib SHARED ${SRC_FILES})
 #######################################
 target_link_libraries(${CLASS_NAME}_lib PUBLIC
     #Add Libraries that need to be linked in
+    ${GET_INPUT_LIB}
+    ${DISPATCH_LIB}
     )
 
 
@@ -136,6 +141,8 @@ if(ENABLE_TESTS)
     #######################################
     target_link_libraries(${CLASS_NAME}_empty_lib PUBLIC
         #Add Fake versions of Libs required
+	${GET_INPUT_FAKE_LIB}
+	${DISPATCH_FAKE_LIB}
         )
 
 

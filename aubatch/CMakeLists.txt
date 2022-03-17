@@ -34,6 +34,7 @@ endif()
 #######################################
 add_subdirectory(${EXECUTION_DIR})
 add_subdirectory(${USER_INTERFACE_DIR})
+add_subdirectory(${GET_INPUT_DIR})
 
 
 #######################################
@@ -51,6 +52,7 @@ include_directories(${COMMON_INCLUDES} ${${CURRENT_DIR}_INC}
     #Add additional required .h files here
     ${EXECUTION_DIR}
     ${USER_INTERFACE_DIR}
+    ${GET_INPUT_DIR}
     )
 
 
@@ -85,6 +87,7 @@ target_link_libraries(${CLASS_NAME}_lib PUBLIC
     pthread
     ${EXECUTION_LIB}
     ${USER_INTERFACE_LIB}
+    ${GET_INPUT_LIB}
     )
 
 

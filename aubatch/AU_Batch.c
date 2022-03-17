@@ -62,8 +62,8 @@ int aubatch()
   execution_inputs->ui_queue_lock = &ui_queue_lock;
 
   pthread_t user_interface_thread, execution_thread;
-  int interface_err = pthread_create(&user_interface_thread, NULL, launch_user_interface, NULL);
-  int execution_err = pthread_create(&execution_thread, NULL, launch_execution, NULL);
+  int interface_err = pthread_create(&user_interface_thread, NULL, launch_user_interface, user_interface_inputs);
+  int execution_err = pthread_create(&execution_thread, NULL, launch_execution, execution_inputs);
 
   if (interface_err != 0 || execution_err != 0)
   {

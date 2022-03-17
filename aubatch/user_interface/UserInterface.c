@@ -48,11 +48,13 @@ int run_user_interface(struct user_interface_inputs_struct *user_interface_input
   pthread_mutex_t ui_queue_lock = user_interface_inputs->ui_queue_lock;
   int *process_count_in_queue = user_interface_inputs->process_count_in_queue;
   pthread_cond_t process_buffer_empty= user_interface_inputs->process_buffer_empty;
-  int exit_cmd = 0;
-  int err_rcvd = 0;
+  int *exit_cmd = malloc(sizeof(int));
+  *exit_cmd = 0;
+  int *err_rcvd = malloc(sizeof(int));
+  err_rcvd = 0;
   size_t input_size[INPUT_BUFFER_MAX_SIZE];
-  char *input;
-  while (exit_cmd == 0)
+  char *input = (char *)malloc(10 * sizeof(char));
+  while (*exit_cmd == 0)
   {
     pthread_mutex_lock(&ui_queue_lock);
     while (*process_count_in_queue == MAX_PROCESS_COUNT)
@@ -61,6 +63,10 @@ int run_user_interface(struct user_interface_inputs_struct *user_interface_input
     }
     pthread_mutex_unlock(&ui_queue_lock);
     fprintf(stdout, "\n>");
-    exit_cmd = 1;
+    get_user_interface_input(input, input_size);
+    //exit_cmd = 1;
+    dispatch(input, &exit_cmd, &err_rcvd);
   }
+  int ret_val = (int)(uintptr_t)err_rcvd;
+  return ret_val;
 }

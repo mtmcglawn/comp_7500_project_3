@@ -5,9 +5,12 @@
 #include <pthread.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 
 #include "Config.h"
+#include "Dispatch.h"
+#include "Get_Input.h"
 
 
 /*

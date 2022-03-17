@@ -47,4 +47,7 @@
 void get_input(char *input, size_t *input_size);
 
 
+void get_user_interface_input(char *input, size_t *input_size);
+
+
 #endif

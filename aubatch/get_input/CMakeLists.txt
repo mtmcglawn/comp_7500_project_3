@@ -4,7 +4,7 @@ include_guard(GLOBAL)
 set(CURRENT_DIR GET_INPUT)
 set(CLASS_NAME Get_Input)
 set(DRIVER_NAME ${CLASS_NAME}Driver)
-set(EXE_NAME git_execution)
+set(EXE_NAME get_input)
 
 
 if (NOT ${CMAKE_SOURCE_DIR})
@@ -94,7 +94,6 @@ target_link_libraries(${CLASS_NAME}_lib PUBLIC
 #target_link_libraries(${EXE_NAME} PUBLIC ${CLASS_NAME}_lib)
 
 
-set(ENABLE_TESTS FALSE) # Can't test input
 if(ENABLE_TESTS)
     #######################################
     # Testing
@@ -143,20 +142,20 @@ if(ENABLE_TESTS)
     #######################################
     # Unit Tests
     #######################################
-    add_executable(${EXE_NAME}_test.exe ${TEST_SRC_FILES})
+    #add_executable(${EXE_NAME}_test.exe ${TEST_SRC_FILES})
 
 
     #######################################
     # Standard linking to gtest stuff
     #######################################
-    target_link_libraries(${EXE_NAME}_test.exe gtest gtest_main)
+    #target_link_libraries(${EXE_NAME}_test.exe gtest gtest_main)
 
 
     #######################################
     # Extra linking for the project.
     #######################################
-    target_link_libraries(${EXE_NAME}_test.exe ${CLASS_NAME}_empty_lib
-        )
+    #target_link_libraries(${EXE_NAME}_test.exe ${CLASS_NAME}_empty_lib
+    #)
 
 
     # This is so you can do 'make test' to see all your tests run, instead of
@@ -165,6 +164,6 @@ if(ENABLE_TESTS)
     # or from the root of the repository
     if(${CMAKE_SOURCE_DIR} STREQUAL ${BASE_DIR}
             OR ${CMAKE_SOURCE_DIR} STREQUAL ${${CURRENT_DIR}_DIR})
-        add_test(${EXE_NAME}Tests ${EXE_NAME}_test.exe)
+    #add_test(${EXE_NAME}Tests ${EXE_NAME}_test.exe)
     endif()
 endif()
