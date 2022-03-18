@@ -40,33 +40,37 @@
 
 void *launch_user_interface(void *arg)
 {
-  pthread_exit((void *)(intptr_t)run_user_interface((struct user_interface_inputs_struct*)arg));
+  pthread_exit((void *)(intptr_t)run_user_interface((thread_data_struct*)arg));
 }
 
-int run_user_interface(struct user_interface_inputs_struct *user_interface_inputs)
+int run_user_interface(thread_data_struct *user_interface_inputs)
 {
   pthread_mutex_t ui_queue_lock = user_interface_inputs->ui_queue_lock;
   int *process_count_in_queue = user_interface_inputs->process_count_in_queue;
-  pthread_cond_t process_buffer_empty= user_interface_inputs->process_buffer_empty;
-  int *exit_cmd = malloc(sizeof(int));
-  *exit_cmd = 0;
-  int *err_rcvd = malloc(sizeof(int));
-  err_rcvd = 0;
+  pthread_cond_t process_buffer_empty = user_interface_inputs->process_buffer_empty;
+  int **exit_cmd = (int **)malloc(sizeof(int));
+  exit_cmd = user_interface_inputs->exit_cmd;
+  int *err_rcvd = (int *)malloc(sizeof(int));
+  *err_rcvd = 0;
   size_t input_size[INPUT_BUFFER_MAX_SIZE];
-  char *input = (char *)malloc(10 * sizeof(char));
-  while (*exit_cmd == 0)
+  char *input = (char *)malloc(INPUT_BUFFER_MAX_SIZE * sizeof(char));
+  command_data_struct *command_data = (
+      command_data_struct *)malloc(
+        sizeof(command_data_struct));
+  get_command_data(command_data);
+  command_data->count = user_interface_inputs->process_count_in_queue;
+  pthread_mutex_lock(&ui_queue_lock);
+  while (**exit_cmd != 0)
   {
-    pthread_mutex_lock(&ui_queue_lock);
     while (*process_count_in_queue == MAX_PROCESS_COUNT)
     {
       pthread_cond_wait(&process_buffer_empty, &ui_queue_lock);
     }
     pthread_mutex_unlock(&ui_queue_lock);
     fprintf(stdout, "\n>");
-    get_user_interface_input(input, input_size);
-    //exit_cmd = 1;
-    dispatch(input, &exit_cmd, &err_rcvd);
+    get_user_interface_input(&input, input_size);
+    dispatch(input, exit_cmd, &err_rcvd, command_data);
   }
-  int ret_val = (int)(uintptr_t)err_rcvd;
+  int ret_val = *err_rcvd;
   return ret_val;
 }

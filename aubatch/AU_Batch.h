@@ -6,10 +6,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 
 
 #include "Config.h"
 #include "Execution.h"
+#include "ThreadData.h"
 #include "UserInterface.h"
 
 

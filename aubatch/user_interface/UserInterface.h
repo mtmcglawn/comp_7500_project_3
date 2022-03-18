@@ -8,9 +8,11 @@
 #include <stdlib.h>
 
 
+#include "CommandData.h"
 #include "Config.h"
 #include "Dispatch.h"
 #include "Get_Input.h"
+#include "ThreadData.h"
 
 
 /*
@@ -49,17 +51,9 @@
  */
 
 
-typedef struct user_interface_inputs_struct
-{
-  pthread_mutex_t ui_queue_lock;
-  int *process_count_in_queue;
-  pthread_cond_t process_buffer_empty;
-} user_interface_inputs;
-
-
 void *launch_user_interface(void *arg);
 
-int run_user_interface(struct user_interface_inputs_struct *user_interface_inputs);
+int run_user_interface(thread_data_struct *user_interface_inputs);
 
 
 #endif

@@ -1,12 +1,10 @@
-#ifndef _GET_INPUT_H
-#define _GET_INPUT_H
+#ifndef _COMMAND_DATA_H
+#define _COMMAND_DATA_H
 
 
 #include <stdio.h>
 #include <stdlib.h>
-
-
-#include "Config.h"
+#include <sys/types.h>
 
 
 /*
@@ -45,10 +43,17 @@
  */
 
 
-void get_input(char **input, size_t *input_size);
+typedef struct data
+{
+  u_int total;
+  u_int *count;
+  float turn_around_time;
+  float cpu_time;
+  float waiting_time;
+} command_data_struct;
 
 
-void get_user_interface_input(char **input, size_t *input_size);
+int get_command_data(command_data_struct *command_data);
 
 
 #endif

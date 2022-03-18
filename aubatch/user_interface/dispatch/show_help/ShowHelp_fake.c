@@ -1,12 +1,5 @@
-#ifndef _GET_INPUT_H
-#define _GET_INPUT_H
-
-
-#include <stdio.h>
-#include <stdlib.h>
-
-
-#include "Config.h"
+#define _SHOW_HELP_C
+#include "ShowHelp.h"
 
 
 /*
@@ -45,10 +38,8 @@
  */
 
 
-void get_input(char **input, size_t *input_size);
-
-
-void get_user_interface_input(char **input, size_t *input_size);
-
-
-#endif
+int show_help(int nargs, char **args, int **exit_cmd,
+    command_data_struct *command_data)
+{
+  return 0;
+}

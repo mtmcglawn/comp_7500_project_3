@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.22)
 include_guard(GLOBAL)
 
-set(CURRENT_DIR USER_INTERFACE)
-set(CLASS_NAME UserInterface)
+set(CURRENT_DIR SHOW_HELP)
+set(CLASS_NAME ShowHelp)
 set(DRIVER_NAME ${CLASS_NAME}Driver)
-set(EXE_NAME user_interface)
+set(EXE_NAME show_help)
 
 
 if (NOT ${CMAKE_SOURCE_DIR})
@@ -32,8 +32,7 @@ endif()
 #######################################
 # Add Subdirectories
 #######################################
-add_subdirectory(${DISPATCH_DIR})
-add_subdirectory(${COMMAND_DATA_DIR})
+#add_subdirectory(${})
 
 
 #######################################
@@ -41,8 +40,7 @@ add_subdirectory(${COMMAND_DATA_DIR})
 #######################################
 if(${CMAKE_SOURCE_DIR} STREQUAL ${${CURRENT_DIR}_INC})
     #Add Includes to directories not in subdirectories
-    add_subdirectory(${GET_INPUT_DIR} ${BUILD_DIR}/get_input)
-    add_subdirectory(${THREAD_DATA_DIR} ${BUILD_DIR}/thread_data)
+    add_subdirectory(${COMMAND_DATA_DIR} ${BUILD_DIR}/command_data)
 endif()
 
 
@@ -51,12 +49,7 @@ endif()
 #######################################
 include_directories(${COMMON_INCLUDES} ${${CURRENT_DIR}_INC}
     #Add additional required .h files here
-    ${GET_INPUT_DIR}
-    ${THREAD_DATA_DIR}
-    ${DISPATCH_DIR}
-    ${COMMAND_DATA_DIR}
-    ${SHOW_HELP_DIR}
-    ${QUIT_RUNS_DIR}
+    ${COMMAND_DATA_INC}
     )
 
 
@@ -88,12 +81,7 @@ add_library(${CLASS_NAME}_lib SHARED ${SRC_FILES})
 #######################################
 target_link_libraries(${CLASS_NAME}_lib PUBLIC
     #Add Libraries that need to be linked in
-    ${GET_INPUT_LIB}
-    ${THREAD_DATA_LIB}
-    ${DISPATCH_LIB}
     ${COMMAND_DATA_LIB}
-    ${SHOW_HELP_LIB}
-    ${QUIT_RUNS_LIB}
     )
 
 
@@ -151,9 +139,6 @@ if(ENABLE_TESTS)
     #######################################
     target_link_libraries(${CLASS_NAME}_empty_lib PUBLIC
         #Add Fake versions of Libs required
-	${GET_INPUT_FAKE_LIB}
-        ${THREAD_DATA_FAKE_LIB}
-	${DISPATCH_FAKE_LIB}
 	${COMMAND_DATA_FAKE_LIB}
         )
 

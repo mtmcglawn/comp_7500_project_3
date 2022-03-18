@@ -1,9 +1,10 @@
-#ifndef _GET_INPUT_H
-#define _GET_INPUT_H
+#ifndef _THREAD_DATA_H
+#define _THREAD_DATA_H
 
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
 
 
 #include "Config.h"
@@ -45,10 +46,27 @@
  */
 
 
-void get_input(char **input, size_t *input_size);
+typedef struct jd
+{
+  char name[50];
+  int priority;
+  int burst;
+  int position;
+  time_t arrival;
+} job_def;
+
+typedef struct t_data
+{
+  pthread_mutex_t ui_queue_lock;
+  int *process_count_in_queue;
+  pthread_cond_t process_buffer_empty;
+  int **exit_cmd;
+  job_def jobBuffer[MAX_PROCESS_COUNT - 1];
+  u_int buf_tail;
+} thread_data_struct;
 
 
-void get_user_interface_input(char **input, size_t *input_size);
+int get_thread_data(thread_data_struct *thread_data);
 
 
 #endif

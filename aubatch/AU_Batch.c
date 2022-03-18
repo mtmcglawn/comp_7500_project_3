@@ -45,31 +45,20 @@ int aubatch()
   strcat( welcome_string, second_line);
   fprintf(stdout, "%s", welcome_string);
 
-  pthread_mutex_t ui_queue_lock;
-  int process_count_in_queue = 0;
-  pthread_cond_t process_buffer_empty;
-
-  struct user_interface_inputs_struct *user_interface_inputs = (
-      struct user_interface_inputs_struct *)malloc(
-        sizeof(struct user_interface_inputs_struct));
-  user_interface_inputs->ui_queue_lock = ui_queue_lock;
-  user_interface_inputs->process_count_in_queue = &process_count_in_queue;
-  user_interface_inputs->process_buffer_empty = process_buffer_empty;
-
-  struct execution_inputs_struct *execution_inputs = (
-      struct execution_inputs_struct *)malloc(
-        sizeof(struct execution_inputs_struct));
-  execution_inputs->ui_queue_lock = &ui_queue_lock;
+  thread_data_struct *inputs = (
+      thread_data_struct *)malloc(
+        sizeof(thread_data_struct));
+  get_thread_data(inputs)
 
   pthread_t user_interface_thread, execution_thread;
-  int interface_err = pthread_create(&user_interface_thread, NULL, launch_user_interface, user_interface_inputs);
-  int execution_err = pthread_create(&execution_thread, NULL, launch_execution, execution_inputs);
+  int interface_err = pthread_create(&user_interface_thread, NULL, launch_user_interface, inputs);
+  int execution_err = pthread_create(&execution_thread, NULL, launch_execution, inputs);
 
   if (interface_err != 0 || execution_err != 0)
   {
     fprintf(stderr, "Error creating threads");
-    free(user_interface_inputs);
-    free(execution_inputs);
+    free(inputs);
+    free(inputs);
     return 1;
   }
 
@@ -84,43 +73,38 @@ int aubatch()
   if (interface_err != 0 || execution_err != 0)
   {
     fprintf(stderr, "Error joining threads");
-    free(user_interface_inputs);
-    free(execution_inputs);
+    free(inputs);
     free(ui_ret_val);
     free(ex_ret_val);
     return 1;
   }
 
-  if (ui_ret_val != 0)
+  if ((int)(uintptr_t)ui_ret_val != 0)
   {
     switch((int)(uintptr_t)ui_ret_val)
     {
       default:
         fprintf(stderr, "UI return value unknown");
-      free(user_interface_inputs);
-      free(execution_inputs);
-      free(ui_ret_val);
+      free(inputs);
       free(ex_ret_val);
       return 1;
     }
   }
 
-  if (ex_ret_val != 0)
+  if ((int)(uintptr_t)ex_ret_val != 0)
   {
     switch((int)(uintptr_t)ex_ret_val)
     {
       default:
         fprintf(stderr, "UI return value unknown");
-      free(user_interface_inputs);
-      free(execution_inputs);
+      free(inputs);
       free(ui_ret_val);
       free(ex_ret_val);
       return 1;
     }
   }
 
-  free(user_interface_inputs);
-  free(execution_inputs);
+  free(inputs);
   free(ui_ret_val);
   free(ex_ret_val);
   return 0;

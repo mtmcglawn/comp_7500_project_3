@@ -35,6 +35,7 @@ endif()
 add_subdirectory(${EXECUTION_DIR})
 add_subdirectory(${USER_INTERFACE_DIR})
 add_subdirectory(${GET_INPUT_DIR})
+add_subdirectory(${THREAD_DATA_DIR})
 
 
 #######################################
@@ -53,6 +54,11 @@ include_directories(${COMMON_INCLUDES} ${${CURRENT_DIR}_INC}
     ${EXECUTION_DIR}
     ${USER_INTERFACE_DIR}
     ${GET_INPUT_DIR}
+    ${THREAD_DATA_DIR}
+    ${DISPATCH_DIR}
+    ${COMMAND_DATA_DIR}
+    ${SHOW_HELP_DIR}
+    ${QUIT_RUNS_DIR}
     )
 
 
@@ -88,6 +94,11 @@ target_link_libraries(${CLASS_NAME}_lib PUBLIC
     ${EXECUTION_LIB}
     ${USER_INTERFACE_LIB}
     ${GET_INPUT_LIB}
+    ${THREAD_DATA_LIB}
+    ${DISPATCH_LIB}
+    ${COMMAND_DATA_LIB}
+    ${SHOW_HELP_LIB}
+    ${QUIT_RUNS_LIB}
     )
 
 
@@ -148,6 +159,7 @@ if(ENABLE_TESTS)
         pthread
 	${EXECUTION_FAKE_LIB}
 	${USER_INTERFACE_FAKE_LIB}
+	${THREAD_DATA_FAKE_LIB}
         )
 
 

@@ -3,6 +3,14 @@
 
 
 #include <pthread.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+
+#include "Config.h"
+#include "ThreadData.h"
 
 
 /*
@@ -41,13 +49,9 @@
  */
 
 
-typedef struct execution_inputs_struct
-{
-  pthread_mutex_t *ui_queue_lock;
-} execution_inputs;
-
-
 void *launch_execution(void *arg);
+
+int run_execution(thread_data_struct *execution_inputs);
 
 
 #endif

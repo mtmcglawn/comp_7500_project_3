@@ -38,9 +38,11 @@
  */
 
 
-void get_input(char *input, size_t *input_size);
+void get_input(char **input, size_t *input_size);
 
-void get_user_interface_input(char *input, size_t *input_size)
+void get_user_interface_input(char **input, size_t *input_size)
 {
-  input = "Hello";
+  char *hello = (char *)malloc(6 * sizeof(char));
+  hello = "Hello";
+  *input = hello;
 }

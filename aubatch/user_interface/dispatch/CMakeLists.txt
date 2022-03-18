@@ -32,7 +32,8 @@ endif()
 #######################################
 # Add Subdirectories
 #######################################
-#add_subdirectory(${})
+add_subdirectory(${SHOW_HELP_DIR})
+add_subdirectory(${QUIT_RUNS_DIR})
 
 
 #######################################
@@ -40,6 +41,7 @@ endif()
 #######################################
 if(${CMAKE_SOURCE_DIR} STREQUAL ${${CURRENT_DIR}_INC})
     #Add Includes to directories not in subdirectories
+    add_subdirectory(${COMMAND_DATA_DIR} ${BUILD_DIR}/command_data)
 endif()
 
 
@@ -48,6 +50,9 @@ endif()
 #######################################
 include_directories(${COMMON_INCLUDES} ${${CURRENT_DIR}_INC}
     #Add additional required .h files here
+    ${COMMAND_DATA_INC}
+    ${SHOW_HELP_INC}
+    ${QUIT_RUNS_INC}
     )
 
 
@@ -79,6 +84,9 @@ add_library(${CLASS_NAME}_lib SHARED ${SRC_FILES})
 #######################################
 target_link_libraries(${CLASS_NAME}_lib PUBLIC
     #Add Libraries that need to be linked in
+    ${COMMAND_DATA_LIB}
+    ${SHOW_HELP_LIB}
+    ${QUIT_RUNS_LIB}
     )
 
 
@@ -136,6 +144,9 @@ if(ENABLE_TESTS)
     #######################################
     target_link_libraries(${CLASS_NAME}_empty_lib PUBLIC
         #Add Fake versions of Libs required
+	${COMMAND_DATA_FAKE_LIB}
+	${SHOW_HELP_FAKE_LIB}
+	${QUIT_RUNS_FAKE_LIB}
         )
 
 

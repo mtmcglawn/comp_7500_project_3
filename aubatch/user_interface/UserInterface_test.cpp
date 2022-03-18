@@ -16,13 +16,18 @@ struct UserInterfaceTest : public testing::Test {
   int process_count_in_queue = 0;
   pthread_cond_t process_buffer_empty;
 
-  struct user_interface_inputs_struct *user_interface_inputs = (
-      struct user_interface_inputs_struct *)malloc(
-        sizeof(struct user_interface_inputs_struct));
+  thread_data_struct *user_interface_inputs = (
+      thread_data_struct *)malloc(
+        sizeof(thread_data_struct));
   void SetUp() {
+    int exit = -1;
+    int *exit_ptr = (int*)malloc(sizeof(int));
+    exit_ptr = &exit;
     user_interface_inputs->ui_queue_lock = ui_queue_lock;
     user_interface_inputs->process_count_in_queue = &process_count_in_queue;
     user_interface_inputs->process_buffer_empty = process_buffer_empty;
+    user_interface_inputs->exit_cmd = (int**)malloc(sizeof(int));
+    user_interface_inputs->exit_cmd = &exit_ptr;
   }
   void TearDown() {}
 };

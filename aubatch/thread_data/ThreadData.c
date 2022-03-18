@@ -1,12 +1,5 @@
-#ifndef _GET_INPUT_H
-#define _GET_INPUT_H
-
-
-#include <stdio.h>
-#include <stdlib.h>
-
-
-#include "Config.h"
+#define _THREAD_DATA_C
+#include "ThreadData.h"
 
 
 /*
@@ -45,10 +38,22 @@
  */
 
 
-void get_input(char **input, size_t *input_size);
+int get_thread_data(thread_data_struct *thread_data)
+{
+  pthread_mutex_t ui_queue_lock;
+  int process_count_in_queue = 0;
+  pthread_cond_t process_buffer_empty;
+  u_int count = 0;
+  int exit = -1;
+  int *exit_ptr = malloc(sizeof(int));
+  exit_ptr = &exit;
+
+  thread_data->ui_queue_lock = ui_queue_lock;
+  thread_data->process_count_in_queue = &process_count_in_queue;
+  thread_data->process_buffer_empty = process_buffer_empty;
+  thread_data->exit_cmd = malloc(sizeof(int));
+  thread_data->exit_cmd = &exit_ptr;
 
 
-void get_user_interface_input(char **input, size_t *input_size);
-
-
-#endif
+  return 0;
+}

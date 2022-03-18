@@ -17,5 +17,10 @@ set(GOOGLETEST_DIR     ${EXTERNAL_DEPS_DIR}/googletest)
 set(EXECUTION_DIR      ${AU_BATCH_DIR}/execution)
 set(USER_INTERFACE_DIR ${AU_BATCH_DIR}/user_interface)
 set(GET_INPUT_DIR      ${AU_BATCH_DIR}/get_input)
+set(THREAD_DATA_DIR    ${AU_BATCH_DIR}/thread_data)
 
-set(DISPATCH_DIR ${USER_INTERFACE_DIR}/dispatch)
+set(DISPATCH_DIR       ${USER_INTERFACE_DIR}/dispatch)
+set(COMMAND_DATA_DIR   ${USER_INTERFACE_DIR}/command_data)
+
+set(SHOW_HELP_DIR      ${DISPATCH_DIR}/show_help)
+set(QUIT_RUNS_DIR      ${DISPATCH_DIR}/quit_runs)

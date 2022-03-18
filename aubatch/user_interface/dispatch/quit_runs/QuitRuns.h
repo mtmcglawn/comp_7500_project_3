@@ -1,12 +1,11 @@
-#ifndef _GET_INPUT_H
-#define _GET_INPUT_H
+#ifndef _QUIT_RUNS_H
+#define _QUIT_RUNS_H
 
 
 #include <stdio.h>
-#include <stdlib.h>
 
 
-#include "Config.h"
+#include "CommandData.h"
 
 
 /*
@@ -45,10 +44,8 @@
  */
 
 
-void get_input(char **input, size_t *input_size);
-
-
-void get_user_interface_input(char **input, size_t *input_size);
+int quit_runs(int nargs, char **args, int **exit_cmd,
+    command_data_struct *command_data);
 
 
 #endif

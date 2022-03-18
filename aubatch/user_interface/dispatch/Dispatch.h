@@ -2,7 +2,15 @@
 #define _DISPATCH_H
 
 
-#include <pthread.h>
+#include <assert.h>
+#include <stdio.h>
+#include <string.h>
+
+
+#include "CommandData.h"
+#include "Config.h"
+#include "ShowHelp.h"
+#include "QuitRuns.h"
 
 
 /*
@@ -41,7 +49,8 @@
  */
 
 
-int dispatch(char *input, int **exit_cmd, int **err_rcvd);
+int dispatch(char *input, int **exit_cmd, int **err_rcvd,
+    command_data_struct *command_data);
 
 
 #endif

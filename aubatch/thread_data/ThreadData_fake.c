@@ -1,12 +1,5 @@
-#ifndef _GET_INPUT_H
-#define _GET_INPUT_H
-
-
-#include <stdio.h>
-#include <stdlib.h>
-
-
-#include "Config.h"
+#define _THREAD_DATA_C
+#include "ThreadData.h"
 
 
 /*
@@ -45,10 +38,7 @@
  */
 
 
-void get_input(char **input, size_t *input_size);
-
-
-void get_user_interface_input(char **input, size_t *input_size);
-
-
-#endif
+int get_thread_data(thread_data_struct *thread_data)
+{
+  return 0;
+}
