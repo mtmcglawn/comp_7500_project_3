@@ -7,7 +7,7 @@ extern "C" {
 using namespace std;
 
 
-TEST(PWordCount, DoesAssertWork){
+TEST(AU_Batch, DoesAssertWork){
   ASSERT_TRUE(1 == 1);
 }
 
