@@ -1,12 +1,5 @@
-#ifndef _GET_INPUT_H
-#define _GET_INPUT_H
-
-
-#include <stdio.h>
-#include <stdlib.h>
-
-
-#include "Config.h"
+#define _BEGIN_RUN_C
+#include "BeginRun.h"
 
 
 /*
@@ -45,9 +38,8 @@
  */
 
 
-void get_input(char **input, size_t *input_size);
-
-void get_user_interface_input(char **input, size_t *input_size);
-
-
-#endif
+int begin_run(int nargs, char **args, int *exit_cmd,
+    command_data_struct *command_data)
+{
+  return 0;
+}

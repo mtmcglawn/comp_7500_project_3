@@ -40,15 +40,15 @@
 
 static struct {
   const char *command;
-  int (*func)(int nargs, char **args, int **exit_cmd,
+  int (*func)(int nargs, char **args, int *exit_cmd,
       command_data_struct *command_data);
 } cmdmapping[] =
 {
   {"?\n",        show_help},
   {"h\n",        show_help},
   {"help\n",     show_help},
-  //{"r",          launch_run},
-  //{"run",        launch_run},
+  {"r",          begin_run},
+  {"run",        begin_run},
   {"q\n",        quit_runs},
   {"quit\n",     quit_runs},
   //{"l\n",        list_runs},
@@ -61,7 +61,7 @@ static struct {
 };
 
 
-int dispatch(char *input, int **exit_cmd, int **err_rcvd,
+int dispatch(char *input, int *exit_cmd, int **err_rcvd,
     command_data_struct *command_data)
 {
   int ret_val = 0;
@@ -73,16 +73,14 @@ int dispatch(char *input, int **exit_cmd, int **err_rcvd,
     if (arg_count >= MAX_ARG_NUMBER)
     {
       fprintf(stdout, "Too many arguments");
-      ret_val = 0;
-      *exit_cmd = &ret_val;
+      *exit_cmd = 0;
       return 1;
     }
     args[arg_count++] = command;
   }
   if (arg_count == 0)
   {
-      ret_val = 0;
-    *exit_cmd = &ret_val;
+    *exit_cmd = 0;
     return 2;
   }
   for (int i=0; cmdmapping[i].command; i++)

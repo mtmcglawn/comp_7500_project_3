@@ -11,6 +11,7 @@
 #include "Config.h"
 #include "ShowHelp.h"
 #include "QuitRuns.h"
+#include "BeginRun.h"
 
 
 /*
@@ -49,7 +50,7 @@
  */
 
 
-int dispatch(char *input, int **exit_cmd, int **err_rcvd,
+int dispatch(char *input, int *exit_cmd, int **err_rcvd,
     command_data_struct *command_data);
 
 

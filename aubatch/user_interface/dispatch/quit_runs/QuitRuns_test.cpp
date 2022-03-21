@@ -16,11 +16,14 @@ TEST(ShowHelpTest, DoesNotCrash){
   command_data_struct *command_data = (
       command_data_struct *)malloc(
         sizeof(command_data_struct));
+  get_command_data(command_data);
+  u_int number = 0;
+  command_data->count = &number;
   int *exit_cmd = (int *)malloc(sizeof(int));
   char **help = (char **)malloc(sizeof(char*));
   char input[] = "help";
   *help = input;
-  quit_runs(1, help, &exit_cmd, command_data);
+  quit_runs(1, help, exit_cmd, command_data);
   std::string output = testing::internal::GetCapturedStdout();
   ASSERT_TRUE(1 == 1);
 }

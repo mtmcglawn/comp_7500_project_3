@@ -43,7 +43,7 @@ void *launch_user_interface(void *arg)
   pthread_exit(0);
 }
 
-int run_user_interface(thread_data_struct *user_interface_inputs)
+int run_user_interface(void *arg)
 {
   return 0;
 }

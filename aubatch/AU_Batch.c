@@ -48,7 +48,11 @@ int aubatch()
   thread_data_struct *inputs = (
       thread_data_struct *)malloc(
         sizeof(thread_data_struct));
-  get_thread_data(inputs)
+  get_thread_data(inputs);
+
+  pthread_mutex_init(&(inputs->ui_queue_lock), NULL);
+  pthread_cond_init(&(inputs->process_buffer_full), NULL);
+  pthread_cond_init(&(inputs->process_buffer_empty), NULL);
 
   pthread_t user_interface_thread, execution_thread;
   int interface_err = pthread_create(&user_interface_thread, NULL, launch_user_interface, inputs);
@@ -61,9 +65,6 @@ int aubatch()
     free(inputs);
     return 1;
   }
-
-  pthread_mutex_init(&ui_queue_lock, NULL);
-  pthread_cond_init(&process_buffer_empty, NULL);
 
   void *ui_ret_val;
   void *ex_ret_val;

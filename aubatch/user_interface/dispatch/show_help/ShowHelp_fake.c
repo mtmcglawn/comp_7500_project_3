@@ -38,7 +38,7 @@
  */
 
 
-int show_help(int nargs, char **args, int **exit_cmd,
+int show_help(int nargs, char **args, int *exit_cmd,
     command_data_struct *command_data)
 {
   return 0;

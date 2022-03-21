@@ -1,7 +1,7 @@
 #include <iostream>
 #include "gtest/gtest.h"
 extern "C" {
-#include "ShowHelp.h"
+#include "BeginRun.h"
 }
 
 using namespace std;
@@ -20,7 +20,7 @@ TEST(ShowHelpTest, DoesNotCrash){
   char **help = (char **)malloc(sizeof(char*));
   char input[] = "help";
   *help = input;
-  show_help(1, help, exit_cmd, command_data);
+  begin_run(1, help, exit_cmd, command_data);
   std::string output = testing::internal::GetCapturedStdout();
   ASSERT_TRUE(1 == 1);
 }

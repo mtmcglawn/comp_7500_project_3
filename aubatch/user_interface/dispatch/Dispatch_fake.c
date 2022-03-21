@@ -38,10 +38,10 @@
  */
 
 
-int dispatch(char *input, int **exit_cmd, int **err_rcvd,
+int dispatch(char *input, int *exit_cmd, int **err_rcvd,
     command_data_struct *command_data)
 {
-  int ret_val = 0;
-  *exit_cmd = &ret_val;
+  //int ret_val = 0;
+  *exit_cmd = 0;//&ret_val;
   return 0;
 }

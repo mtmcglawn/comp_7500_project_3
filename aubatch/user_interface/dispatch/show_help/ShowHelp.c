@@ -38,7 +38,7 @@
  */
 
 
-int show_help(int nargs, char **args, int **exit_cmd,
+int show_help(int nargs, char **args, int *exit_cmd,
     command_data_struct *command_data)
 {
   (void)nargs;
@@ -54,7 +54,6 @@ int show_help(int nargs, char **args, int **exit_cmd,
   fprintf(stdout, "      <main_CPU_time> <max_CPU_time>\n");
   fprintf(stdout, "quit: exit AUbatch\n");
   fprintf(stdout, "help: print this menu\n");
-  int ret_val = 1;
-  *exit_cmd = &ret_val;
+  *exit_cmd = 1;
   return 0;
 }

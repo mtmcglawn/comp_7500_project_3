@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.22)
 include_guard(GLOBAL)
 
-set(CURRENT_DIR SHOW_HELP)
-set(CLASS_NAME ShowHelp)
+set(CURRENT_DIR BEGIN_RUN)
+set(CLASS_NAME BeginRun)
 set(DRIVER_NAME ${CLASS_NAME}Driver)
-set(EXE_NAME show_help)
+set(EXE_NAME begin_run)
 
 
 if (NOT ${CMAKE_SOURCE_DIR})

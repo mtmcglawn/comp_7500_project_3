@@ -38,13 +38,12 @@
  */
 
 
-int quit_runs(int nargs, char **args, int **exit_cmd,
+int quit_runs(int nargs, char **args, int *exit_cmd,
     command_data_struct *command_data)
 {
   (void)nargs;
   (void)args;
-  int ret_val = 0;
-  *exit_cmd = &ret_val;
+  *exit_cmd = 0;
   float total_runs = command_data->total - *(command_data->count);
   if (total_runs < 1) {
     fprintf(stdout, "Cannot show statistics as not enough processes have finished\n");

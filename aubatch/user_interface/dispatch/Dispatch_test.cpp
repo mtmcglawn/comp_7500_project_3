@@ -30,7 +30,7 @@ struct DispatchTest : public testing::Test {
 
 TEST_F(DispatchTest, DoesNotCrash){
   testing::internal::CaptureStdout();
-  dispatch(input, &exit_cmd, &err_rcvd, command_data);
+  dispatch(input, exit_cmd, &err_rcvd, command_data);
   std::string output = testing::internal::GetCapturedStdout();
   ASSERT_TRUE(1 == 1);
 }

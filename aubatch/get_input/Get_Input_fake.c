@@ -46,3 +46,4 @@ void get_user_interface_input(char **input, size_t *input_size)
   hello = "Hello";
   *input = hello;
 }
+

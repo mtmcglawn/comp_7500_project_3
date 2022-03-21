@@ -40,6 +40,8 @@
 
 int get_command_data(command_data_struct *command_data)
 {
+  int init_policy = 0;
+  command_data->policy = &init_policy;
   command_data->total = 0;
   command_data->count = malloc(sizeof(u_int));
   return 0;

@@ -2,9 +2,14 @@
 #define _COMMAND_DATA_H
 
 
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+
+
+#include "Config.h"
+#include "ThreadData.h"
 
 
 /*
@@ -50,6 +55,11 @@ typedef struct data
   float turn_around_time;
   float cpu_time;
   float waiting_time;
+  job_def *jobBuffer;
+  int *buf_head;
+  u_int *expected_waiting_time;
+  pthread_cond_t process_buffer_full;
+  int *policy;
 } command_data_struct;
 
 

@@ -34,6 +34,7 @@ endif()
 #######################################
 add_subdirectory(${SHOW_HELP_DIR})
 add_subdirectory(${QUIT_RUNS_DIR})
+add_subdirectory(${BEGIN_RUN_DIR})
 
 
 #######################################
@@ -42,6 +43,7 @@ add_subdirectory(${QUIT_RUNS_DIR})
 if(${CMAKE_SOURCE_DIR} STREQUAL ${${CURRENT_DIR}_INC})
     #Add Includes to directories not in subdirectories
     add_subdirectory(${COMMAND_DATA_DIR} ${BUILD_DIR}/command_data)
+    add_subdirectory(${THREAD_DATA_DIR} ${BUILD_DIR}/thread_data)
 endif()
 
 
@@ -53,6 +55,8 @@ include_directories(${COMMON_INCLUDES} ${${CURRENT_DIR}_INC}
     ${COMMAND_DATA_INC}
     ${SHOW_HELP_INC}
     ${QUIT_RUNS_INC}
+    ${BEGIN_RUN_INC}
+    ${THREAD_DATA_INC}
     )
 
 
@@ -87,6 +91,8 @@ target_link_libraries(${CLASS_NAME}_lib PUBLIC
     ${COMMAND_DATA_LIB}
     ${SHOW_HELP_LIB}
     ${QUIT_RUNS_LIB}
+    ${BEGIN_RUN_LIB}
+    ${THREAD_DATA_LIB}
     )
 
 
@@ -147,6 +153,8 @@ if(ENABLE_TESTS)
 	${COMMAND_DATA_FAKE_LIB}
 	${SHOW_HELP_FAKE_LIB}
 	${QUIT_RUNS_FAKE_LIB}
+	${BEGIN_RUN_FAKE_LIB}
+	${THREAD_DATA_FAKE_LIB}
         )
 
 

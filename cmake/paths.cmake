@@ -24,3 +24,4 @@ set(COMMAND_DATA_DIR   ${USER_INTERFACE_DIR}/command_data)
 
 set(SHOW_HELP_DIR      ${DISPATCH_DIR}/show_help)
 set(QUIT_RUNS_DIR      ${DISPATCH_DIR}/quit_runs)
+set(BEGIN_RUN_DIR      ${DISPATCH_DIR}/begin_run)

@@ -38,10 +38,10 @@
  */
 
 
-int quit_runs(int nargs, char **args, int **exit_cmd,
+int quit_runs(int nargs, char **args, int *exit_cmd,
     command_data_struct *command_data)
 {
-  int ret_val = 0;
-  *exit_cmd = &ret_val;
+  //int ret_val = 0;
+  *exit_cmd = 0;//&ret_val;
   return 0;
 }

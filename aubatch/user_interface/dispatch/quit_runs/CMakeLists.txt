@@ -41,6 +41,7 @@ endif()
 if(${CMAKE_SOURCE_DIR} STREQUAL ${${CURRENT_DIR}_INC})
     #Add Includes to directories not in subdirectories
     add_subdirectory(${COMMAND_DATA_DIR} ${BUILD_DIR}/command_data)
+    add_subdirectory(${THREAD_DATA_DIR} ${BUILD_DIR}/thread_data)
 endif()
 
 
@@ -50,6 +51,7 @@ endif()
 include_directories(${COMMON_INCLUDES} ${${CURRENT_DIR}_INC}
     #Add additional required .h files here
     ${COMMAND_DATA_INC}
+    ${THREAD_DATA_INC}
     )
 
 
@@ -82,6 +84,7 @@ add_library(${CLASS_NAME}_lib SHARED ${SRC_FILES})
 target_link_libraries(${CLASS_NAME}_lib PUBLIC
     #Add Libraries that need to be linked in
     ${COMMAND_DATA_LIB}
+    ${THREAD_DATA_LIB}
     )
 
 
@@ -140,6 +143,7 @@ if(ENABLE_TESTS)
     target_link_libraries(${CLASS_NAME}_empty_lib PUBLIC
         #Add Fake versions of Libs required
 	${COMMAND_DATA_FAKE_LIB}
+	${THREAD_DATA_FAKE_LIB}
         )
 
 

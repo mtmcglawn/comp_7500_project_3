@@ -59,10 +59,19 @@ typedef struct t_data
 {
   pthread_mutex_t ui_queue_lock;
   int *process_count_in_queue;
+  int *buf_tail;
+  int *buf_head;
+  pthread_cond_t process_buffer_full;
   pthread_cond_t process_buffer_empty;
-  int **exit_cmd;
+  int *exit_cmd;
   job_def jobBuffer[MAX_PROCESS_COUNT - 1];
-  u_int buf_tail;
+  float *cpu_time;
+  float *cpu_time_total;
+  u_int *expected_waiting_time;
+  float *waiting_time;
+  float *waiting_time_total;
+  float *turn_around_time;
+  float *turn_around_time_total;
 } thread_data_struct;
 
 

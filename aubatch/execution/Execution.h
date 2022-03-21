@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 
@@ -51,7 +52,7 @@
 
 void *launch_execution(void *arg);
 
-int run_execution(thread_data_struct *execution_inputs);
+int run_execution(void *arg);
 
 
 #endif

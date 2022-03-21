@@ -40,16 +40,13 @@
 
 void *launch_user_interface(void *arg)
 {
-  pthread_exit((void *)(intptr_t)run_user_interface((thread_data_struct*)arg));
+  pthread_exit((void *)(intptr_t)run_user_interface(arg));
 }
 
-int run_user_interface(thread_data_struct *user_interface_inputs)
+int run_user_interface(void *arg)
 {
-  pthread_mutex_t ui_queue_lock = user_interface_inputs->ui_queue_lock;
+  thread_data_struct *user_interface_inputs = (thread_data_struct*)arg;
   int *process_count_in_queue = user_interface_inputs->process_count_in_queue;
-  pthread_cond_t process_buffer_empty = user_interface_inputs->process_buffer_empty;
-  int **exit_cmd = (int **)malloc(sizeof(int));
-  exit_cmd = user_interface_inputs->exit_cmd;
   int *err_rcvd = (int *)malloc(sizeof(int));
   *err_rcvd = 0;
   size_t input_size[INPUT_BUFFER_MAX_SIZE];
@@ -59,18 +56,22 @@ int run_user_interface(thread_data_struct *user_interface_inputs)
         sizeof(command_data_struct));
   get_command_data(command_data);
   command_data->count = user_interface_inputs->process_count_in_queue;
-  pthread_mutex_lock(&ui_queue_lock);
-  while (**exit_cmd != 0)
+  command_data->jobBuffer = user_interface_inputs->jobBuffer;
+  command_data->buf_head = user_interface_inputs->buf_head;
+  command_data->expected_waiting_time = user_interface_inputs->expected_waiting_time;
+  pthread_mutex_lock(&(user_interface_inputs->ui_queue_lock));
+  while (*(user_interface_inputs->exit_cmd) != 0)
   {
     while (*process_count_in_queue == MAX_PROCESS_COUNT)
     {
-      pthread_cond_wait(&process_buffer_empty, &ui_queue_lock);
+      pthread_cond_wait(&(user_interface_inputs->process_buffer_full), &(user_interface_inputs->ui_queue_lock));
     }
-    pthread_mutex_unlock(&ui_queue_lock);
     fprintf(stdout, "\n>");
     get_user_interface_input(&input, input_size);
-    dispatch(input, exit_cmd, &err_rcvd, command_data);
+    dispatch(input, user_interface_inputs->exit_cmd, &err_rcvd, command_data);
   }
+  pthread_cond_signal(&(user_interface_inputs->process_buffer_empty));
+  pthread_mutex_unlock(&(user_interface_inputs->ui_queue_lock));
   int ret_val = *err_rcvd;
   return ret_val;
 }

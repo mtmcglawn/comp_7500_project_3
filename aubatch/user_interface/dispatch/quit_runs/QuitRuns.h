@@ -44,7 +44,7 @@
  */
 
 
-int quit_runs(int nargs, char **args, int **exit_cmd,
+int quit_runs(int nargs, char **args, int *exit_cmd,
     command_data_struct *command_data);
 
 

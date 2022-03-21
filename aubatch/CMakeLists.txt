@@ -51,14 +51,15 @@ endif()
 #######################################
 include_directories(${COMMON_INCLUDES} ${${CURRENT_DIR}_INC}
     #Add additional required .h files here
-    ${EXECUTION_DIR}
-    ${USER_INTERFACE_DIR}
-    ${GET_INPUT_DIR}
-    ${THREAD_DATA_DIR}
-    ${DISPATCH_DIR}
-    ${COMMAND_DATA_DIR}
-    ${SHOW_HELP_DIR}
-    ${QUIT_RUNS_DIR}
+    ${EXECUTION_INC}
+    ${USER_INTERFACE_INC}
+    ${GET_INPUT_INC}
+    ${THREAD_DATA_INC}
+    ${DISPATCH_INC}
+    ${COMMAND_DATA_INC}
+    ${SHOW_HELP_INC}
+    ${QUIT_RUNS_INC}
+    ${BEGIN_RUN_INC}
     )
 
 
@@ -99,6 +100,7 @@ target_link_libraries(${CLASS_NAME}_lib PUBLIC
     ${COMMAND_DATA_LIB}
     ${SHOW_HELP_LIB}
     ${QUIT_RUNS_LIB}
+    ${BEGIN_RUN_LIB}
     )
 
 
