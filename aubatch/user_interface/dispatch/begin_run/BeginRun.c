@@ -33,8 +33,8 @@
  * USE
  *
  * To run the program you can either:
- * 1: $ ./build/aubatch/aubatch <file_name>
- * 2: $ cd ./build/aubatch/ && ./aubatch <file_name>
+ * 1: $ ./build/aubatch/aubatch
+ * 2: $ cd ./build/aubatch/ && ./aubatch
  */
 
 
@@ -59,12 +59,33 @@ int begin_run(int nargs, char **args, int *exit_cmd,
   *(command_data->count) += 1;
   *(command_data->buf_head) += 1;
   command_data->jobBuffer[*(command_data->buf_head)].position = *(command_data->buf_head);
-  pthread_cond_signal(&(command_data->process_buffer_full));
+  pthread_cond_signal(command_data->process_buffer_full);
   char *policy_set;
   if (*(command_data->policy) == 0)
   {
-    //cmd_fcfs(NULL, NULL);
+    run_fcfs(0, NULL, exit_cmd, command_data);
     policy_set = "FCFS.";
   }
+  else if (*(command_data->policy) == 1)
+  {
+    run_sjf(0, NULL, exit_cmd, command_data);
+    policy_set = "SJF.";
+  }
+  else if (*(command_data->policy) == 2)
+  {
+    run_priority(0, NULL, exit_cmd, command_data);
+    policy_set = "Priority.";
+  }
+  if (*(command_data->is_run))
+  {
+    fprintf(stdout, "Job %s", name);
+    fprintf(stdout, " was submitted.\n");
+    fprintf(stdout, "Total number of jobs in the queue: %u\n", *(command_data->count));
+    fprintf(stdout, "Expected waiting time: %u seconds\n", *(command_data->expected_waiting_time));
+    fprintf(stdout, "Scheduling Policy: %s\n", policy_set);
+
+  }
+  *(command_data->total)++;
+  *(command_data->total_complete) = *(command_data->total);
   return 0;
 }

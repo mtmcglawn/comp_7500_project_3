@@ -8,5 +8,5 @@
 #define WRITE_END 1
 #define INPUT_BUFFER_MAX_SIZE 2048
 #define MAX_PROCESS_COUNT 20
-#define MAX_ARG_NUMBER 7
+#define MAX_ARG_NUMBER 8
 #define MAX_ARG_SIZE 20

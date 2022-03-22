@@ -32,7 +32,9 @@ endif()
 #######################################
 # Add Subdirectories
 #######################################
-#add_subdirectory(${})
+add_subdirectory(${RUN_FCFS_DIR})
+add_subdirectory(${RUN_SJF_DIR})
+add_subdirectory(${RUN_PRIORITY_DIR})
 
 
 #######################################
@@ -52,6 +54,9 @@ include_directories(${COMMON_INCLUDES} ${${CURRENT_DIR}_INC}
     #Add additional required .h files here
     ${COMMAND_DATA_INC}
     ${THREAD_DATA_INC}
+    ${RUN_FCFS_INC}
+    ${RUN_SJF_INC}
+    ${RUN_PRIORITY_INC}
     )
 
 
@@ -85,6 +90,9 @@ target_link_libraries(${CLASS_NAME}_lib PUBLIC
     #Add Libraries that need to be linked in
     ${COMMAND_DATA_LIB}
     ${THREAD_DATA_LIB}
+    ${RUN_FCFS_LIB}
+    ${RUN_SJF_LIB}
+    ${RUN_PRIORITY_LIB}
     )
 
 
@@ -144,6 +152,9 @@ if(ENABLE_TESTS)
         #Add Fake versions of Libs required
 	${COMMAND_DATA_FAKE_LIB}
 	${THREAD_DATA_FAKE_LIB}
+	${RUN_FCFS_FAKE_LIB}
+	${RUN_SJF_FAKE_LIB}
+	${RUN_PRIORITY_FAKE_LIB}
         )
 
 

@@ -41,8 +41,8 @@
  * USE
  *
  * To run the program you can either:
- * 1: $ ./build/aubatch/aubatch <file_name>
- * 2: $ cd ./build/aubatch/ && ./aubatch <file_name>
+ * 1: $ ./build/aubatch/aubatch
+ * 2: $ cd ./build/aubatch/ && ./aubatch
  */
 
 
@@ -57,12 +57,12 @@ typedef struct jd
 
 typedef struct t_data
 {
-  pthread_mutex_t ui_queue_lock;
-  int *process_count_in_queue;
+  pthread_mutex_t *ui_queue_lock;
+  u_int *process_count_in_queue;
   int *buf_tail;
   int *buf_head;
-  pthread_cond_t process_buffer_full;
-  pthread_cond_t process_buffer_empty;
+  pthread_cond_t *process_buffer_full;
+  pthread_cond_t *process_buffer_empty;
   int *exit_cmd;
   job_def jobBuffer[MAX_PROCESS_COUNT - 1];
   float *cpu_time;

@@ -33,26 +33,24 @@
  * USE
  *
  * To run the program you can either:
- * 1: $ ./build/aubatch/aubatch <file_name>
- * 2: $ cd ./build/aubatch/ && ./aubatch <file_name>
+ * 1: $ ./build/aubatch/aubatch
+ * 2: $ cd ./build/aubatch/ && ./aubatch
  */
 
 
 int quit_runs(int nargs, char **args, int *exit_cmd,
     command_data_struct *command_data)
 {
-  (void)nargs;
-  (void)args;
   *exit_cmd = 0;
-  float total_runs = command_data->total - *(command_data->count);
+  float total_runs = *(command_data->total) - *(command_data->count);
   if (total_runs < 1) {
     fprintf(stdout, "Cannot show statistics as not enough processes have finished\n");
     return 0;
   }
   fprintf(stdout, "Total number of jobs submitted: %u\n", command_data->total);
-  float turn_around = command_data->turn_around_time / total_runs;
-  float cpu = command_data->cpu_time / total_runs;
-  float wait_time = command_data->waiting_time / total_runs;
+  float turn_around = *(command_data->turn_around_time) / total_runs;
+  float cpu = *(command_data->cpu_time) / total_runs;
+  float wait_time = *(command_data->waiting_time) / total_runs;
   float throughput = 1 / cpu;
   fprintf(stdout, "Average turnaround time:    %.2f seconds\n", command_data->total);
   fprintf(stdout, "Average CPU time:           %.2f seconds\n", cpu);

@@ -40,8 +40,8 @@
  * USE
  *
  * To run the program you can either:
- * 1: $ ./build/aubatch/aubatch <file_name>
- * 2: $ cd ./build/aubatch/ && ./aubatch <file_name>
+ * 1: $ ./build/aubatch/aubatch
+ * 2: $ cd ./build/aubatch/ && ./aubatch
  */
 
 

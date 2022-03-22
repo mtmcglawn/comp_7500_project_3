@@ -33,20 +33,19 @@
  * USE
  *
  * To run the program you can either:
- * 1: $ ./build/aubatch/aubatch <file_name>
- * 2: $ cd ./build/aubatch/ && ./aubatch <file_name>
+ * 1: $ ./build/aubatch/aubatch
+ * 2: $ cd ./build/aubatch/ && ./aubatch
  */
 
 
 void *launch_user_interface(void *arg)
 {
-  pthread_exit((void *)(intptr_t)run_user_interface(arg));
+  int *ret_val = run_user_interface(arg);
 }
 
-int run_user_interface(void *arg)
+int *run_user_interface(void *arg)
 {
   thread_data_struct *user_interface_inputs = (thread_data_struct*)arg;
-  int *process_count_in_queue = user_interface_inputs->process_count_in_queue;
   int *err_rcvd = (int *)malloc(sizeof(int));
   *err_rcvd = 0;
   size_t input_size[INPUT_BUFFER_MAX_SIZE];
@@ -54,24 +53,38 @@ int run_user_interface(void *arg)
   command_data_struct *command_data = (
       command_data_struct *)malloc(
         sizeof(command_data_struct));
-  get_command_data(command_data);
-  command_data->count = user_interface_inputs->process_count_in_queue;
-  command_data->jobBuffer = user_interface_inputs->jobBuffer;
-  command_data->buf_head = user_interface_inputs->buf_head;
-  command_data->expected_waiting_time = user_interface_inputs->expected_waiting_time;
-  pthread_mutex_lock(&(user_interface_inputs->ui_queue_lock));
-  while (*(user_interface_inputs->exit_cmd) != 0)
+  int init_policy = 0;
+  u_int total = 0;
+  u_int total_complete = 0;
+  int is_run = 1;
+  int is_scheduled = 1;
+  command_data->policy = &init_policy;
+  command_data->total = &total;
+  command_data->total_complete = &total_complete;
+  command_data->is_run = &is_run;
+  command_data->is_scheduled = &is_scheduled;
+  while ( *(user_interface_inputs->exit_cmd))
   {
-    while (*process_count_in_queue == MAX_PROCESS_COUNT)
+    command_data->count = user_interface_inputs->process_count_in_queue;
+    command_data->jobBuffer = user_interface_inputs->jobBuffer;
+    command_data->buf_head = user_interface_inputs->buf_head;
+    command_data->buf_tail = user_interface_inputs->buf_tail;
+    command_data->expected_waiting_time = user_interface_inputs->expected_waiting_time;
+    command_data->cpu_time = user_interface_inputs->cpu_time;
+    command_data->cpu_time_total = user_interface_inputs->cpu_time_total;
+    command_data->waiting_time = user_interface_inputs->waiting_time;
+    command_data->waiting_time_total = user_interface_inputs->waiting_time_total;
+    command_data->turn_around_time = user_interface_inputs->turn_around_time;
+    command_data->process_buffer_full = user_interface_inputs->process_buffer_full;
+    pthread_mutex_lock(user_interface_inputs->ui_queue_lock);
+    while (*(user_interface_inputs->process_count_in_queue) == MAX_PROCESS_COUNT)
     {
-      pthread_cond_wait(&(user_interface_inputs->process_buffer_full), &(user_interface_inputs->ui_queue_lock));
+      pthread_cond_wait(user_interface_inputs->process_buffer_full, user_interface_inputs->ui_queue_lock);
     }
+    pthread_mutex_unlock(user_interface_inputs->ui_queue_lock);
     fprintf(stdout, "\n>");
     get_user_interface_input(&input, input_size);
     dispatch(input, user_interface_inputs->exit_cmd, &err_rcvd, command_data);
   }
-  pthread_cond_signal(&(user_interface_inputs->process_buffer_empty));
-  pthread_mutex_unlock(&(user_interface_inputs->ui_queue_lock));
-  int ret_val = *err_rcvd;
-  return ret_val;
+  return err_rcvd;
 }

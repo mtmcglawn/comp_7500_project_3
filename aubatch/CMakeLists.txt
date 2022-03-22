@@ -60,6 +60,11 @@ include_directories(${COMMON_INCLUDES} ${${CURRENT_DIR}_INC}
     ${SHOW_HELP_INC}
     ${QUIT_RUNS_INC}
     ${BEGIN_RUN_INC}
+    ${LIST_RUNS_INC}
+    ${RUN_TEST_INC}
+    ${RUN_FCFS_INC}
+    ${RUN_SJF_INC}
+    ${RUN_PRIORITY_INC}
     )
 
 
@@ -101,6 +106,11 @@ target_link_libraries(${CLASS_NAME}_lib PUBLIC
     ${SHOW_HELP_LIB}
     ${QUIT_RUNS_LIB}
     ${BEGIN_RUN_LIB}
+    ${LIST_RUNS_LIB}
+    ${RUN_TEST_LIB}
+    ${RUN_FCFS_LIB}
+    ${RUN_SJF_LIB}
+    ${RUN_PRIORITY_LIB}
     )
 
 

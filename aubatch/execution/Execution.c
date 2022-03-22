@@ -33,8 +33,8 @@
  * USE
  *
  * To run the program you can either:
- * 1: $ ./build/aubatch/aubatch <file_name>
- * 2: $ cd ./build/aubatch/ && ./aubatch <file_name>
+ * 1: $ ./build/aubatch/aubatch
+ * 2: $ cd ./build/aubatch/ && ./aubatch
  */
 
 
@@ -48,22 +48,22 @@ int run_execution(void *arg)
   char arg1[50];
   char arg2[50];
   thread_data_struct *execution_inputs = (thread_data_struct*)arg;
-  int *process_count_in_queue = execution_inputs->process_count_in_queue;
-  job_def *jobBuffer = execution_inputs->jobBuffer;
-  int *buf_tail = execution_inputs->buf_tail;
-  pthread_mutex_lock(&(execution_inputs->ui_queue_lock));
-  while (*(execution_inputs->exit_cmd) != 0)
+  int local_exit_cmd = -1;
+  while (local_exit_cmd != 0)
   {
-    while (*(execution_inputs->exit_cmd) != 0 && *process_count_in_queue < 1)
+    job_def *jobBuffer = execution_inputs->jobBuffer;
+    int *buf_tail = execution_inputs->buf_tail;
+    pthread_mutex_lock(execution_inputs->ui_queue_lock);
+    while (*(execution_inputs->exit_cmd) != 0 && *(execution_inputs->process_count_in_queue) < 1)
     {
-      pthread_cond_wait(&(execution_inputs->process_buffer_empty), &(execution_inputs->ui_queue_lock));
+      pthread_cond_wait(execution_inputs->process_buffer_empty, execution_inputs->ui_queue_lock);
     }
     if (*(execution_inputs->exit_cmd) == 0)
     {
-      pthread_mutex_unlock(&(execution_inputs->ui_queue_lock));
+      pthread_mutex_unlock(execution_inputs->ui_queue_lock);
       return 0;
     }
-    *process_count_in_queue--;
+    *(execution_inputs->process_count_in_queue)--;
     sprintf(arg1, "%s", jobBuffer[*buf_tail].name);
     sprintf(arg2, "%u", jobBuffer[*buf_tail].burst);
     time_t start_wait = jobBuffer[*buf_tail].arrival;
@@ -79,8 +79,8 @@ int run_execution(void *arg)
     {
       *buf_tail = 0;
     }
-    pthread_cond_signal(&(execution_inputs->process_buffer_full));
-    pthread_mutex_unlock(&(execution_inputs->ui_queue_lock));
+    pthread_cond_signal(execution_inputs->process_buffer_full);
+    pthread_mutex_unlock(execution_inputs->ui_queue_lock);
     int status = 0;
     wait(&status);
     time_t finish_time = time(NULL);
@@ -93,7 +93,7 @@ int run_execution(void *arg)
     *(execution_inputs->waiting_time_total) = *(execution_inputs->waiting_time);
     *(execution_inputs->turn_around_time) += run_time + wait_time;
     *(execution_inputs->turn_around_time_total) = *(execution_inputs->turn_around_time);
+    local_exit_cmd = *(execution_inputs->exit_cmd);
   }
-  pthread_mutex_unlock(&(execution_inputs->ui_queue_lock));
   return 0;
 }

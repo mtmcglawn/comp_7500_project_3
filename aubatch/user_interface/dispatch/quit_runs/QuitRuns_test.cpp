@@ -19,6 +19,8 @@ TEST(ShowHelpTest, DoesNotCrash){
   get_command_data(command_data);
   u_int number = 0;
   command_data->count = &number;
+  u_int total = 0;
+  command_data->total = &total;
   int *exit_cmd = (int *)malloc(sizeof(int));
   char **help = (char **)malloc(sizeof(char*));
   char input[] = "help";

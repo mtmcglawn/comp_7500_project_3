@@ -33,15 +33,14 @@
  * USE
  *
  * To run the program you can either:
- * 1: $ ./build/aubatch/aubatch <file_name>
- * 2: $ cd ./build/aubatch/ && ./aubatch <file_name>
+ * 1: $ ./build/aubatch/aubatch
+ * 2: $ cd ./build/aubatch/ && ./aubatch
  */
 
 
 int quit_runs(int nargs, char **args, int *exit_cmd,
     command_data_struct *command_data)
 {
-  //int ret_val = 0;
-  *exit_cmd = 0;//&ret_val;
+  *exit_cmd = 0;
   return 0;
 }

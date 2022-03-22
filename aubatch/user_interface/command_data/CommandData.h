@@ -43,23 +43,29 @@
  * USE
  *
  * To run the program you can either:
- * 1: $ ./build/aubatch/aubatch <file_name>
- * 2: $ cd ./build/aubatch/ && ./aubatch <file_name>
+ * 1: $ ./build/aubatch/aubatch
+ * 2: $ cd ./build/aubatch/ && ./aubatch
  */
 
 
 typedef struct data
 {
-  u_int total;
+  u_int *total;
+  u_int *total_complete;
   u_int *count;
-  float turn_around_time;
-  float cpu_time;
-  float waiting_time;
+  float *turn_around_time;
+  float *cpu_time;
+  float *cpu_time_total;
+  float *waiting_time;
+  float *waiting_time_total;
   job_def *jobBuffer;
   int *buf_head;
+  int *buf_tail;
   u_int *expected_waiting_time;
-  pthread_cond_t process_buffer_full;
+  pthread_cond_t *process_buffer_full;
   int *policy;
+  int *is_run;
+  int *is_scheduled;
 } command_data_struct;
 
 

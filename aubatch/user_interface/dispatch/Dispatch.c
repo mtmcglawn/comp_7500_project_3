@@ -33,8 +33,8 @@
  * USE
  *
  * To run the program you can either:
- * 1: $ ./build/aubatch/aubatch <file_name>
- * 2: $ cd ./build/aubatch/ && ./aubatch <file_name>
+ * 1: $ ./build/aubatch/aubatch
+ * 2: $ cd ./build/aubatch/ && ./aubatch
  */
 
 
@@ -51,26 +51,27 @@ static struct {
   {"run",        begin_run},
   {"q\n",        quit_runs},
   {"quit\n",     quit_runs},
-  //{"l\n",        list_runs},
-  //{"list\n",     list_runs},
-  //{"sjf\n",      run_short_job_first},
-  //{"fcfs\n",     run_first_come_first_served},
-  //{"priority\n", run_priority_first},
-  //{"test\n",     run_test},
-  {NULL,        NULL}
+  {"l\n",        list_runs},
+  {"list\n",     list_runs},
+  {"sjf\n",      run_sjf},
+  {"fcfs\n",     run_fcfs},
+  {"priority\n", run_priority},
+  {"test",       run_test},
+  {"test\n",     run_test},
+  {"t",          run_test},
+  {NULL,         NULL}
 };
 
 
 int dispatch(char *input, int *exit_cmd, int **err_rcvd,
     command_data_struct *command_data)
 {
-  int ret_val = 0;
   char *args[MAX_ARG_NUMBER];
   int arg_count = 0;
   char *context = NULL;
   for (char *command=strtok_r(input, " ", &context); command != NULL; command=strtok_r(NULL, " ", &context))
   {
-    if (arg_count >= MAX_ARG_NUMBER)
+    if (arg_count >= MAX_ARG_NUMBER - 1)
     {
       fprintf(stdout, "Too many arguments");
       *exit_cmd = 0;

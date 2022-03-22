@@ -35,6 +35,8 @@ endif()
 add_subdirectory(${SHOW_HELP_DIR})
 add_subdirectory(${QUIT_RUNS_DIR})
 add_subdirectory(${BEGIN_RUN_DIR})
+add_subdirectory(${LIST_RUNS_DIR})
+add_subdirectory(${RUN_TEST_DIR})
 
 
 #######################################
@@ -55,8 +57,13 @@ include_directories(${COMMON_INCLUDES} ${${CURRENT_DIR}_INC}
     ${COMMAND_DATA_INC}
     ${SHOW_HELP_INC}
     ${QUIT_RUNS_INC}
+    ${RUN_FCFS_INC}
     ${BEGIN_RUN_INC}
     ${THREAD_DATA_INC}
+    ${LIST_RUNS_INC}
+    ${RUN_TEST_INC}
+    ${RUN_SJF_INC}
+    ${RUN_PRIORITY_INC}
     )
 
 
@@ -93,6 +100,11 @@ target_link_libraries(${CLASS_NAME}_lib PUBLIC
     ${QUIT_RUNS_LIB}
     ${BEGIN_RUN_LIB}
     ${THREAD_DATA_LIB}
+    ${LIST_RUNS_LIB}
+    ${RUN_TEST_LIB}
+    ${RUN_FCFS_LIB}
+    ${RUN_SJF_LIB}
+    ${RUN_PRIORITY_LIB}
     )
 
 
@@ -155,6 +167,11 @@ if(ENABLE_TESTS)
 	${QUIT_RUNS_FAKE_LIB}
 	${BEGIN_RUN_FAKE_LIB}
 	${THREAD_DATA_FAKE_LIB}
+	${LIST_RUNS_FAKE_LIB}
+	${RUN_TEST_FAKE_LIB}
+	${RUN_FCFS_FAKE_LIB}
+	${RUN_SJF_FAKE_LIB}
+	${RUN_PRIORITY_FAKE_LIB}
         )
 
 
